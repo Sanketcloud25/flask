@@ -11,6 +11,12 @@ db = pymysql.connect(
     database='userdb'
 )
 
+# Default route for testing
+@app.route('/')
+def index():
+    return "Auth Service is running!", 200
+
+# Login route
 @app.route('/login', methods=['POST'])
 def login():
     data = request.json
@@ -22,6 +28,7 @@ def login():
         return jsonify({"message": "Login successful"}), 200
     return jsonify({"message": "Invalid credentials"}), 401
 
+# Register route
 @app.route('/register', methods=['POST'])
 def register():
     data = request.json
@@ -31,5 +38,7 @@ def register():
     db.commit()
     return jsonify({"message": "User registered successfully"}), 201
 
+# Run the app
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
+
